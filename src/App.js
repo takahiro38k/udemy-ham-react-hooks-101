@@ -1,35 +1,29 @@
 import React, { useState } from 'react'
 
-/**
- * useState()の初期値は、下記2つの設定方法がある。
- * 1) 内部でinitialState(s)を設定する。
- * 2) 外部でdefaultPropsを設定する。
- */
 const App = (props) => {
-  const initialStates = {
-    name: '',
-    price: 1000,
-  }
-
+  // const [name, setName] = useState(props.name)
+  // const [price, setPrice] = useState(props.price)
   /**
-   * 1)の場合のuseState()
+   * defaultpropsを上記のように個別に受け取るのではなく、
+   * まとめてオブジェクトとしてuseState()のparaに受け取ることもできる。
+   * ◆◆◆◆◆重要◆◆◆◆◆
+   * propsがオブジェクトなので、当然stateもオブジェクトになる。
+   * そうなると、setStateもオブジェクトを返さなければならない(スプレッド演算子を活用)。
    */
-  const [name, setName] = useState(initialStates.name)
-  const [price, setPrice] = useState(initialStates.price)
+  const [state, setState] = useState(props)
+  const { name, price } = state
   /**
-   * 2)の場合のuseState( )
+   * コードが短いので、JSXの中に直接記載。
    */
-  const [stock, setStock] = useState(props.stock)
-  const [date, setDate] = useState(props.date)
-
-  const reset = () => {
-    setPrice(initialStates.price)
-    setName(initialStates.name)
-  }
+  // const reset = () => {
+  //   // setPrice(props.price)
+  //   // setName(props.name)]
+  //   setState(props)
+  // }
 
   return (
     <>
-      <p>現在の「{name}」は、{price}円、残り{stock}個です。</p>
+      <p>現在の「{name}」は、{price}円です。</p>
       {/*
       setxxxx()
       # paraに値・関数どちらでも設定できる。
@@ -37,29 +31,102 @@ const App = (props) => {
         返り値は必ず状態を返すようにすること。
       # setxxxx()によって状態が変化すると、変更箇所が再renderされる。
        */}
-      <button onClick={() => setPrice(price + 1)}>+1</button>
-      <button onClick={() => setPrice(price - 1)}>-1</button>
-      <button onClick={reset}>Reset</button>
+      {/*
+      setStateのpara
+      スプレッド演算子を使うことで、オブジェクトを展開して渡すことができる。
+      カンマで区切り、変更部分のみを指定する。
+       */}
+      <button onClick={() => setState({...state, price: price + 1})}>+1</button>
+      <button onClick={() => setState({...state, price: price - 1})}>-1</button>
+      <button onClick={() => setState(props)}>Reset</button>
       {/*
       イベントハンドラはparaにeventオブジェクトを受け取ることができる。
       引数.target でイベントの起きた要素を取得できる。
        */}
-      <input value={name} onChange={e => setName(e.target.value)}/>
-      <p>日付 {date}</p>
+      {/*
+      <input value={name} onChange={e => setName(e.target.value)} />
+       */}
+      {/*
+      setStateのpara
+      スプレッド演算子を使うことで、オブジェクトを展開して渡すことができる。
+      カンマで区切り、変更部分のみを指定する。
+       */}
+      <input
+        value={name}
+        onChange={e => setState({...state, name: e.target.value})}
+      />
     </>
   )
 }
 
-/**
- * defaultProps
- * コンポーネントのビルトインのプロパティ。defaultのpropsを設定できる。
- * APIで外部から持ってきた値をuseState()の初期値にしたい場合にも便利。
- */
 App.defaultProps = {
-  stock: 5,
-  date: '2020-4-11',
+  name: '',
+  price: 2000,
 }
 
+
+// ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+// ▼implement component using multiple states▼
+
+//   /**
+//  * useState()の初期値は、下記2つの設定方法がある。
+//  * 1) 内部でinitialState(s)を設定する。
+//  * 2) 外部でdefaultPropsを設定する。
+//  */
+// const App = (props) => {
+//   const initialStates = {
+//     name: '',
+//     price: 1000,
+//   }
+
+//   /**
+//    * 1)の場合のuseState()
+//    */
+//   const [name, setName] = useState(initialStates.name)
+//   const [price, setPrice] = useState(initialStates.price)
+//   /**
+//    * 2)の場合のuseState( )
+//    */
+//   const [stock, setStock] = useState(props.stock)
+//   const [date, setDate] = useState(props.date)
+
+//   const reset = () => {
+//     setPrice(initialStates.price)
+//     setName(initialStates.name)
+//   }
+
+//   return (
+//     <>
+//       <p>現在の「{name}」は、{price}円、残り{stock}個です。</p>
+//       {/*
+//       setxxxx()
+//       # paraに値・関数どちらでも設定できる。
+//       # paraが関数の場合、その関数のparaに現在の状態を受け取ることができる。
+//         返り値は必ず状態を返すようにすること。
+//       # setxxxx()によって状態が変化すると、変更箇所が再renderされる。
+//        */}
+//       <button onClick={() => setPrice(price + 1)}>+1</button>
+//       <button onClick={() => setPrice(price - 1)}>-1</button>
+//       <button onClick={reset}>Reset</button>
+//       {/*
+//       イベントハンドラはparaにeventオブジェクトを受け取ることができる。
+//       引数.target でイベントの起きた要素を取得できる。
+//        */}
+//       <input value={name} onChange={e => setName(e.target.value)}/>
+//       <p>日付 {date}</p>
+//     </>
+//   )
+// }
+
+// /**
+//  * defaultProps
+//  * コンポーネントのビルトインのプロパティ。defaultのpropsを設定できる。
+//  * APIで外部から持ってきた値をuseState()の初期値にしたい場合にも便利。
+//  */
+// App.defaultProps = {
+//   stock: 5,
+//   date: '2020-4-11',
+// }
 
 /*
 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
@@ -113,7 +180,6 @@ const App = () => {
   )
 }
 
-▲Counterアプリ▲
 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
  */
 
