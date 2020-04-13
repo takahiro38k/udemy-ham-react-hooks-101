@@ -2,6 +2,7 @@ import React from 'react'
 
 import { DELETE_EVENT } from '../actions'
 
+// 関数コンポーネントでは、propを引数として受け取ることができる。
 const Event = ({ dispatch, event }) => {
   const id = event.id
   const handleClickDeleteButton = () => {
