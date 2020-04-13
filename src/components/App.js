@@ -3,8 +3,12 @@ import React, { useReducer } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import EventForm from './EventForm'
-
 import Events from './Events'
+
+/**
+ * eventsという名前で実装したが、
+ * ここではわかりやすくreducerという名前でimportする。
+ */
 import reducer from '../reducers'
 
 const App = () => {

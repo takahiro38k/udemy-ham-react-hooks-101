@@ -2,7 +2,7 @@ import React from 'react'
 
 import Event from './Event'
 
-// 関数コンポーネントでは、propを引数として受け取ることができる。
+// 関数コンポーネントでは、propsを引数として受け取ることができる。
 const Events = ({ state, dispatch }) => {
   return (
     <>

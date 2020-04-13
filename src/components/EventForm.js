@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { CREATE_EVENT, DELETE_ALL_EVENTS } from '../actions'
 
-// 関数コンポーネントでは、propを引数として受け取ることができる。
+// 関数コンポーネントでは、propsを引数として受け取ることができる。
 const EventForm = ({ state, dispatch }) => {
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
