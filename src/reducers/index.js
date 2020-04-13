@@ -1,3 +1,4 @@
+import { CREATE_EVENT, DELETE_EVENT, DELETE_ALL_EVENTS} from '../actions'
 // ####actionの例:
 // typeは必須。ほかは本アプリのformに合わせた付加情報。
 // ++++----------------
@@ -49,7 +50,7 @@
 
 const events = (state = [], action) => {
   switch (action.type) {
-    case 'CREATE_EVENT':
+    case CREATE_EVENT:
       const event = { title: action.title, body: action.body }
       const length = state.length
       /*
@@ -70,14 +71,13 @@ const events = (state = [], action) => {
        * {id, ...event }   {id: id, ...event }のshorthand。
        */
       return [...state, {id, ...event }]
-    case 'DELETE_EVENT':
+    case DELETE_EVENT:
       return state.filter(event => event.id !== action.id)
-    case 'DELETE_ALL_EVENT':
+    case DELETE_ALL_EVENTS:
       return []
     default:
       return state
   }
-
 }
 
 export default events
