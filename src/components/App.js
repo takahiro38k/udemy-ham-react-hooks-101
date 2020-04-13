@@ -2,6 +2,7 @@ import React, { useReducer, useState } from 'react'
 // jQueryに依存することなく、最低限styleを適用できるようにする。
 import 'bootstrap/dist/css/bootstrap.min.css'
 
+import Event from './Event'
 import reducer from '../reducers'
 
 const App = () => {
@@ -70,6 +71,12 @@ const App = () => {
           </tr>
         </thead>
         <tbody>
+          {/*
+          下記エラーを抑止するため、uniqueなkeyが必須となる。
+          Warning: Each child in a list should have a unique "key" prop.
+          ここではmap()の2nd paraであるindexをkeyとして使用。
+          */}
+          { state.map((event, index) => (<Event key={index} event={event} dispatch={dispatch} />))}
         </tbody>
       </table>
     </div>
