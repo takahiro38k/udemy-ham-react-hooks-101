@@ -29,7 +29,8 @@ const App = () => {
    * それにともない、useReducer()の2nd paraを修正
    */
   const initialState = {
-    events: []
+    events: [],
+    operationLogs: []
   }
   const [state, dispatch] = useReducer(reducer, initialState)
 
