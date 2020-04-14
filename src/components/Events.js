@@ -1,11 +1,36 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 import Event from './Event'
+import AppContext from '../contexts/AppContext'
 
 // 関数コンポーネントでは、propsを引数として受け取ることができる。
 const Events = ({ state, dispatch }) => {
+  /**
+   * Providerコンポーネントのvalueプロップスを受け取れるよう、
+   * contextを設定。
+   */
+  const value = useContext(AppContext)
+
   return (
     <>
+      {/*
+      Consumerコンポーネント(context)
+      下記の形式のとおり、関数の引数としてProviderコンポーネントからvalueを受け取り、
+      処理を行える。
+      <context名.Consumer>{value => {}}</context名.Consumer>
+      --------------------
+      <AppContext.Consumer>
+        {value => { return <div>{value}</div> }}
+      </AppContext.Consumer>
+       */}
+      {/*
+      !!!!! WARNING !!!!!
+      上記はHooksが登場する前の書き方。
+      Hooks登場後のcontextでは、上記にあるuseContext()を設定し、
+      下記のようにシンプルに書くことができる。
+       */}
+      <div>{value}</div>
+
       <h4>イベント一覧</h4>
       <table className="table table-hover">
         <thead>
