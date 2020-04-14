@@ -1,7 +1,13 @@
 import React, { useContext, useState } from 'react'
 
-import { CREATE_EVENT, DELETE_ALL_EVENTS } from '../actions'
+import {
+  CREATE_EVENT,
+  DELETE_ALL_EVENTS,
+  ADD_OPERATION_LOG,
+  DELETE_OPERATION_LOGS,
+} from '../actions'
 import AppContext from '../contexts/AppContext'
+import { timeCurrentIso8601 } from '../utils'
 
 // 関数コンポーネントでは、propsを引数として受け取ることができる。
 // const EventForm = ({ state, dispatch }) => {
@@ -27,6 +33,12 @@ const EventForm = () => {
       body,
     })
 
+    dispatch({
+      type: ADD_OPERATION_LOG,
+      description: 'イベントを作成しました。',
+      operatedAt: timeCurrentIso8601(),
+    })
+
     /**
      * 「イベントを作成する」ボタンをクリックしたらフォームの値をクリア。
      */
@@ -44,7 +56,14 @@ const EventForm = () => {
      * https://developer.mozilla.org/ja/docs/Web/API/Window/confirm
      */
     const result = window.confirm('全てのイベントを本当に削除してもよろしいですか？')
-    if (result) dispatch({ type: DELETE_ALL_EVENTS })
+    if (result) {
+      dispatch({ type: DELETE_ALL_EVENTS })
+      dispatch({
+        type: ADD_OPERATION_LOG,
+        description: '全てのイベントを削除しました。',
+        operatedAt: timeCurrentIso8601(),
+      })
+    }
   }
 
   const unCreatable = title === '' || body === ''
