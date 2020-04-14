@@ -1,9 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 
 import { CREATE_EVENT, DELETE_ALL_EVENTS } from '../actions'
+import AppContext from '../contexts/AppContext'
 
 // 関数コンポーネントでは、propsを引数として受け取ることができる。
-const EventForm = ({ state, dispatch }) => {
+// const EventForm = ({ state, dispatch }) => {
+/**
+ * contextの導入により、propsを引数として受け取ることが不要となる。
+ */
+const EventForm = () => {
+  const { state, dispatch } = useContext(AppContext)
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
 

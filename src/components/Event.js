@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 import { DELETE_EVENT } from '../actions'
+import AppContext from '../contexts/AppContext'
 
 // 関数コンポーネントでは、propsを引数として受け取ることができる。
-const Event = ({ dispatch, event }) => {
+// const Event = ({ dispatch, event }) => {
+/**
+ * contextの導入により、dispatch propsを引数として受け取ることが不要となる。
+ */
+const Event = ({ event }) => {
+  const { dispatch } = useContext(AppContext)
   const id = event.id
   const handleClickDeleteButton = () => {
     const result = window.confirm(`イベント(id=${id})を本当に削除してもよろしいですか？`)

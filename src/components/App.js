@@ -32,10 +32,15 @@ const App = () => {
      * valueは、Providerコンポーネントのwrap内において、
      * Consumerコンポーネントで引数として受け取ることができる。
      */
-    <AppContext.Provider value={'Hello, I am a Provider.'}>
+    <AppContext.Provider value={{ state, dispatch }}>
       <div className="container-fluid">
+        {/*
         <EventForm state={state} dispatch={dispatch}/>
         <Events state={state} dispatch={dispatch}/>
+        contextの導入により、propsの設定が不要となる。
+         */}
+        <EventForm />
+        <Events />
       </div>
     </AppContext.Provider>
   )
