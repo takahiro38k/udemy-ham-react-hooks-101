@@ -23,7 +23,15 @@ const App = () => {
   reVal      [state, dispatch]
   ----------------++++
    */
-  const [state, dispatch] = useReducer(reducer, [])
+  // const [state, dispatch] = useReducer(reducer, [])
+  /**
+   * combineReducers()を導入したことで、stateが[]から{}に変化。
+   * それにともない、useReducer()の2nd paraを修正
+   */
+  const initialState = {
+    events: []
+  }
+  const [state, dispatch] = useReducer(reducer, initialState)
 
   return (
     /**

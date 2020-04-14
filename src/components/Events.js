@@ -62,7 +62,11 @@ const Events = () => {
           {state.map((event, index) => (<Event key={index} event={event} dispatch={dispatch} />))}
           dispatchはcontextで渡すため、ここでのprops設定は不要なので削除。
            */}
+          {/*
           {state.map((event, index) => (<Event key={index} event={event} />))}
+          combineReducers()の導入により、stateが[]から{}に変化。それにともない、修正。
+           */}
+          {state.events.map((event, index) => (<Event key={index} event={event} />))}
         </tbody>
       </table>
     </>
