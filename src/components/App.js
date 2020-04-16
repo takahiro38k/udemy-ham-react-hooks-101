@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useEffect, useReducer } from 'react'
 // jQueryに依存することなく、最低限styleを適用できるようにする。
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -12,9 +12,12 @@ import AppContext from '../contexts/AppContext'
  */
 import reducer from '../reducers'
 
+const APP_KEY = 'appWithRedux'
+
 // console.log({AppContext}) // contextの中身確認
 
 const App = () => {
+  const appState = localStorage.getItem(APP_KEY)
   /*
   useReducer(reducer, initialArg[, init])
   ++++----------------
@@ -27,13 +30,29 @@ const App = () => {
   // const [state, dispatch] = useReducer(reducer, [])
   /**
    * combineReducers()を導入したことで、stateが[]から{}に変化。
-   * それにともない、useReducer()の2nd paraを修正
+   * それにともない、useReducer()の2nd paraを修正。
    */
-  const initialState = {
+  /**
+   * JSON.parse()
+   * 引数に渡したJSON形式の文字列を、JSオブジェクトに変換する。
+   */
+  const initialState = appState ? JSON.parse(appState) : {
     events: [],
     operationLogs: []
   }
   const [state, dispatch] = useReducer(reducer, initialState)
+
+  /**
+   * stateが変更されるたび、localStorageにstateを保存する。
+   */
+  useEffect(() => {
+    /**
+     * JSON.stringify()
+     * 引数に渡したJSオブジェクトを、JSON形式の文字列に変換する。
+     */
+    // console.log(JSON.stringify(state))
+    localStorage.setItem(APP_KEY, JSON.stringify(state))
+  }, [state])
 
   return (
     /**
